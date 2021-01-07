@@ -42,6 +42,7 @@ class PackageController extends Controller
         ]);
 
         $this->api['data'] = $package;
+        $this->api['message'] = 'create package success';
         return response()->json($this->api);
     }
 
@@ -60,6 +61,7 @@ class PackageController extends Controller
         ]);
 
         $this->api['data'] = $package;
+        $this->api['message'] = 'update package success';
         return response()->json($this->api);
     }
 
@@ -70,6 +72,7 @@ class PackageController extends Controller
         ]);
 
         $this->api['data'] = $package;
+        $this->api['message'] = 'package name has been changed';
         return response()->json($this->api);
     }
 
