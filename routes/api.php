@@ -26,4 +26,4 @@ Route::get('/package/{id}', [PackageController::class, 'getPackage']);
 Route::post('/package', [PackageController::class, 'createPackage']);
 Route::put('/package/{id}', [PackageController::class, 'updatePackage']);
 Route::patch('/package/{id}', [PackageController::class, 'updatePackageName']);
-Route::delete('/package{id}', [PackageController::class, 'deletePackage']);
+Route::delete('/package/{id}', [PackageController::class, 'deletePackage']);
