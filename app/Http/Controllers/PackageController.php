@@ -90,10 +90,10 @@ class PackageController extends Controller
             'customer_name' => 'required|min:4',
             'customer_address' => 'required|min:5',
             'customer_email' => 'required|unique:Package,customer_email|email:rfc',
-            'customer_phone' => 'required|min:8',
+            'customer_phone' => 'required|min:8|numeric',
             'receiver_name' => 'required|min:4',
             'receiver_address' => 'required|min:5',
-            'receiver_phone' => 'required|min:8',
+            'receiver_phone' => 'required|min:8|numeric',
         ]);
 
         if($validator->fails()) {
