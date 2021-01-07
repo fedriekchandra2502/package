@@ -28,7 +28,22 @@ class PackageController extends Controller
     }
 
     public function createPackage(Request $request) {
-        $this->validateRequest($request);
+        $validator = Validator::make($request->all(), [
+            'package_name' => 'required|max:255',
+            'customer_name' => 'required|min:4',
+            'customer_address' => 'required|min:5',
+            'customer_email' => 'required|unique:Package,customer_email|email:rfc',
+            'customer_phone' => 'required|min:8|numeric',
+            'receiver_name' => 'required|min:4',
+            'receiver_address' => 'required|min:5',
+            'receiver_phone' => 'required|min:8|numeric',
+        ]);
+
+        if($validator->fails()) {
+            $this->api['ok'] = 0;
+            $this->api['message'] = $validator->messages();
+            return response()->json($this->api,400);
+        };
 
         $package = Package::create([
             'package_name' => $request->input('package_name'),
@@ -47,7 +62,23 @@ class PackageController extends Controller
     }
 
     public function updatePackage(Request $request, $id) {
-        $this->validateRequest($request);
+        $validator = Validator::make($request->all(), [
+            'package_name' => 'required|max:255',
+            'customer_name' => 'required|min:4',
+            'customer_address' => 'required|min:5',
+            'customer_email' => 'required|unique:Package,customer_email|email:rfc',
+            'customer_phone' => 'required|min:8|numeric',
+            'receiver_name' => 'required|min:4',
+            'receiver_address' => 'required|min:5',
+            'receiver_phone' => 'required|min:8|numeric',
+        ]);
+
+        if($validator->fails()) {
+            $this->api['ok'] = 0;
+            $this->api['message'] = $validator->messages();
+            return response()->json($this->api,400);
+        };
+
         $package = Package::find($id);
         $package->update([
             'package_name' => $request->input('package_name'),
@@ -82,24 +113,5 @@ class PackageController extends Controller
 
         $this->api['message'] = 'successfully delete package';
         return response()->json($this->api);
-    }
-
-    public function validateRequest($request) {
-        $validator = Validator::make($request->all(), [
-            'package_name' => 'required|max:255',
-            'customer_name' => 'required|min:4',
-            'customer_address' => 'required|min:5',
-            'customer_email' => 'required|unique:Package,customer_email|email:rfc',
-            'customer_phone' => 'required|min:8|numeric',
-            'receiver_name' => 'required|min:4',
-            'receiver_address' => 'required|min:5',
-            'receiver_phone' => 'required|min:8|numeric',
-        ]);
-
-        if($validator->fails()) {
-            $this->api['ok'] = 0;
-            $this->api['message'] = $validator->messages();
-            return response()->json($this->api,400);
-        };
     }
 }
